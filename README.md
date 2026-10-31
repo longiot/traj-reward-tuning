@@ -6,7 +6,7 @@ A lightweight experimental project on designing and tuning a **nonlinear reward 
 
 ## 🎯 What is this?
 
-This is a fun mini-research experiment exploring whether a handcrafted, ecologically-inspired reward function can correctly rank animal movement trajectories across different individuals without data leakage.
+This is a mini-research experiment exploring whether a handcrafted, ecologically-inspired reward function can correctly rank animal movement trajectories across different individuals without data leakage.
 
 It tunes weights for spatial preference, energy conservation, thermal stress, and path smoothness using **Leave-One-Episode-Out (LOEO)** cross-validation.
 
@@ -19,7 +19,7 @@ At each trajectory step, the reward $R(s, a)$ is computed as:
 $$R = R_{hot} \cdot \text{hot} - \mathcal{P}_{vel} - \mathcal{P}_{temp} - \mathcal{P}_{turn} - \mathcal{P}_{entropy}$$
 
 - **Hotspot Reward ($R_{hot}$)**: Incentive for visiting frequently used resource zones (2D grid density).
-- **Velocity Penalty ($\mathcal{P}_{vel}$)**: $W_{vel} \cdot (1 + 0.5 \cdot \text{is\_night}) \cdot v^{1.5}$. Nocturnal movement is penalized 50% more (day/night computed via `astral` sun ephemeris).
+- **Velocity Penalty ($\mathcal{P}_{vel}$)**: $W_{vel} \cdot (1 + 0.5 \cdot I_{\text{night}}) \cdot v^{1.5}$, where $I_{\text{night}} \in \{0, 1\}$ indicates nighttime (computed via `astral` sun ephemeris). Nocturnal movement is penalized 50% more.
 - **Temperature Penalty ($\mathcal{P}_{temp}$)**: Softplus barrier $W_{temp} \cdot \frac{\text{softplus}(\beta(T - \tau))}{\beta}$ to penalize extreme heat.
 - **Turn Penalty ($\mathcal{P}_{turn}$)**: Instantaneous turn angle penalty $W_{smooth} \cdot (\Delta \theta / 180^\circ)^2$.
 - **Entropy Penalty ($\mathcal{P}_{entropy}$)**: Rolling-window directional entropy $W_{entropy} \cdot \frac{\mathcal{H}(\Delta \theta)}{\ln(18)}$ to discourage aimless wandering.
@@ -35,7 +35,7 @@ $$R = R_{hot} \cdot \text{hot} - \mathcal{P}_{vel} - \mathcal{P}_{temp} - \mathc
 
 ---
 
-## 🚀 Quickstart
+## 🚀 How to use ?
 
 ### 1. Install Dependencies
 ```bash
